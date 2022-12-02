@@ -3,11 +3,6 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Users') }}
         </h2>
-        @if (session('status'))
-            <div class="alert alert-success" role="alert">
-                {{ session('status') }}
-            </div>
-        @endif
     </x-slot>
 
     {{--    <div class="container">--}}
@@ -67,6 +62,12 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                @if (session('status'))
+                    <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                         role="alert">
+                        <span class="font-medium">{{ session('status') }}
+                    </div>
+                @endif
                 <div class="overflow-x-auto relative">
                     <table class="w-full text-sm text-left text-gray-500">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -95,14 +96,15 @@
                                     class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap ">{{ $user->id }}</th>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
+                                @if (Auth::id() !== $user->id)
+                                    <td>
+                                        <a href="{{ route('user-delete', $user->id) }}"
+                                           class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Удалить</a>
+                                    </td>
+                                @endif
 
-                                <td>
-                                    <a href="{{ route('user-delete', $user->id) }}" class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Удалить</a>
-                                </td>
                             </tr>
                         @endforeach
-
-
 
 
                         </tbody>
