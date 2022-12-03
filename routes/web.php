@@ -19,17 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/users', [App\Http\Controllers\UsersController::class, 'index'])->name('users');
+    Route::get('/users/{id}/delete', [App\Http\Controllers\UsersController::class, 'userDelete'])->name('user-delete');
 });
 
-Route::get('/users', [App\Http\Controllers\UsersController::class, 'index'])->name('users');
-Route::get('/users/{id}', [App\Http\Controllers\UsersController::class, 'userInfo'])->name('user-info');
-Route::get('/users/{id}/delete', [App\Http\Controllers\UsersController::class, 'userDelete'])->name('user-delete');
-
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
